@@ -123,7 +123,7 @@ function gerarChaves() {
   var chavePublica = aleatorioCoprimo(coprimos);
 
   var chavePrivada = gerarChavePrivada(chavePublica, totiente);
-  console.log(chavePrivada);
+
   if (chavePrivada != 1001) {
     console.log(`Numero primo: ${primo1}`)
     console.log(`Numero primo: ${primo2}`)
