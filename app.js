@@ -5,6 +5,7 @@ const PORT = 5000;
 const routes = require('./src/routes/index')
 
 app.set('views', path.join(__dirname, '/src/views'));
+app.use(express.static(__dirname + '/src'));
 app.set('view engine', 'ejs');
 
 app.use('/', routes);

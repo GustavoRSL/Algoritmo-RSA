@@ -2,6 +2,7 @@
   "name": "criptografia",
   "main": "app.js",
   "dependencies": {
+    "axios": "^0.27.2",
     "big-integer": "^1.6.51",
     "big.js": "^6.2.1",
     "decimal.js": "^10.3.1",

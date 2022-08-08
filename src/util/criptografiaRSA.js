@@ -69,19 +69,28 @@ class RSA {
 
   static criptografar(msg, chavePublica, n) {
     var msgCriptografada = [];
-    for (var i in msg) {
-      msgCriptografada.push(bigInt(msg[i]).modPow(chavePublica, n)); 
+
+    var ascii = this.converteStringAscii(msg);
+
+    for (var i in ascii) {
+      msgCriptografada.push(bigInt(ascii[i]).modPow(chavePublica, n)); 
     }
+
     return msgCriptografada;
   }
 
   static descriptografar(msg, chavePrivada, n) {
-    var msgdesCriptografada = [];
+    msg = msg.split(",");
+    var msgDescriptografada = [];
+
     for(var i in msg){
-      //msgdesCriptografada.push(new Decimal(Math.pow(msg[i], chavePrivada) % n));
-      msgdesCriptografada.push(bigInt(msg[i]).modPow(chavePrivada, n)); 
+      msgDescriptografada.push(bigInt(parseInt(msg[i])).modPow(chavePrivada, n)); 
     }
-    return msgdesCriptografada;
+
+    var msgFinal = this.converteAsciiString(msgDescriptografada).toString()
+    msgFinal = msgFinal.replace(/,/g, "")
+
+    return msgFinal;
   }
 
   static converteStringAscii(msg) {
@@ -108,30 +117,4 @@ class RSA {
     return string;
   }
 }
-
-// Message
-const mensagem = 'Gustavo Reis Souza Lima';
-
-// Generate RSA keys
-const chaves = RSA.gerarChaves();
-console.log(chaves);
-
-const mensagem_ascii = RSA.converteStringAscii(mensagem);
-const mensagem_criptograda = RSA.criptografar(mensagem_ascii, chaves.chavePublica, chaves.n);
-const mensagem_decriptograda = RSA.descriptografar(mensagem_criptograda, chaves.chavePrivada, chaves.n);
-const mensagem_decodificada = RSA.converteAsciiString(mensagem_decriptograda);
-const mensagem_final = RSA.printarMsg(mensagem_decodificada);
-
-console.log('Mensagem:', mensagem);
-console.log('Ascii:', mensagem_ascii.toString());
-console.log('Criptograda:', mensagem_criptograda.toString());
-console.log('Decriptograda:', mensagem_decriptograda.toString());
-console.log('Decoded:', mensagem_decodificada.toString());
-console.log('Mensagem:', mensagem_final.toString());
-console.log();
-console.log('Correct?', mensagem === mensagem_final);
-
-
-
-
 module.exports = RSA;
