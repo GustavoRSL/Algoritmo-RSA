@@ -1,13 +1,15 @@
 const bigInt = require('big-integer');
 
-bits = 10;
+bits = 18;
 
 class RSA {
   static gerarPrimoAleatorio() {
     // Biblioteca bigInt para conseguir processar números muito grandes
     // Bits = Capacidade dos números
-    const min = bigInt.one.shiftLeft(bits - 1);
+    const min = bigInt.one.shiftLeft(bits/2).prev();
     const max = bigInt.one.shiftLeft(bits).prev();
+    console.log(min)
+    console.log(max)
 
     while (true) {
       var numero = bigInt.randBetween(min, max);
@@ -54,7 +56,7 @@ class RSA {
     // Terceiro passo: Calcular Totiente. 
     totiente = this.calculaTotiente(p, q);
 
-    //Escolha um número “e”(chave pública) que seja um dos coprimos de n
+    //Escolha um número “e”(chave pública) que seja um dos coprimos de totiente
     while (true) {
       chavePublica = bigInt.randBetween(bigInt(2), totiente.prev());
       if (chavePublica.isProbablePrime()) {
@@ -117,4 +119,6 @@ class RSA {
     return string;
   }
 }
+ 
+RSA.gerarPrimoAleatorio();
 module.exports = RSA;
